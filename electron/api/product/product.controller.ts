@@ -1,7 +1,9 @@
-import { Body, Controller, Post, Res } from "decorators-express";
+import { Body, Controller, Post, Res, Use } from "decorators-express";
 import express from "express";
-import Container, { Inject, Service } from "typedi";
+import Container, { Service } from "typedi";
 import { ProductService } from "./product.service";
+import { makeValidateBody } from "express-class-validator";
+import { ProductCreateDTO } from "./product.dto";
 
 @Controller("/product")
 @Service()
@@ -13,6 +15,7 @@ export class ProductController {
   }
 
   @Post("")
+  @Use(makeValidateBody(ProductCreateDTO))
   async create(@Res() res: express.Response, @Body() body: any) {
     try {
       const productService = Container.get(ProductService);
