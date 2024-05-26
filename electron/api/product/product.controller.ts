@@ -8,7 +8,7 @@ import { ProductCreateDTO } from "./product.dto";
 @Controller("/product")
 @Service()
 export class ProductController {
-  private productService: ProductService;
+  productService: ProductService;
 
   constructor(productService: ProductService) {
     this.productService = productService;
@@ -16,10 +16,10 @@ export class ProductController {
 
   @Post("")
   @Use(makeValidateBody(ProductCreateDTO))
-  async create(@Res() res: express.Response, @Body() body: any) {
+  async create(@Res() res: express.Response, @Body() body: ProductCreateDTO) {
     try {
       const productService = Container.get(ProductService);
-      const result = await productService.create();
+      const result = await productService.create(body);
       res.status(200).json(result);
     } catch (error: any) {
       res.status(400).json({

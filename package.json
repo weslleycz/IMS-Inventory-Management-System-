@@ -17,6 +17,8 @@
     "express-class-validator": "^1.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router": "^6.23.1",
+    "react-router-dom": "^6.23.1",
     "snapjson": "^1.2.0",
     "typedi": "^0.10.0"
   },
