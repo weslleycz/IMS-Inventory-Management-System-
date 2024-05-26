@@ -1,17 +1,22 @@
 import { AppRouter } from "decorators-express";
 import express from "express";
+import "reflect-metadata";
 import "./controllers";
-import { sequelize } from './servers/sqlite-sequelize';
+import Container, { Service } from "typedi";
 
-const app = express();
+@Service()
+class AppExpress {
+  bootstrap() {
+    const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
 
-(async () =>{
-    await sequelize.sync();
-  })()
+    app.use(AppRouter.getInstance());
 
-app.use(AppRouter.getInstance());
+    app.listen(3000);
+  }
+}
 
-app.listen(3000);
+const appExpress = Container.get(AppExpress);
+appExpress.bootstrap();
