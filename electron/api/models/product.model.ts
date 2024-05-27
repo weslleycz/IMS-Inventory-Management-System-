@@ -6,4 +6,5 @@ export class ProductModel {
   createdAt!: Date;
   updatedAt!: Date;
   image?: string;
+  readonly entity_Name: string = "product";
 }
