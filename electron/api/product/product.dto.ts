@@ -20,4 +20,8 @@ export class ProductCreateDTO  {
   @IsString({ message: "A imagem deve ser uma string." })
   @IsOptional({ message: "A imagem é opcional." })
   image?: string | undefined;
+
+  @IsString({ message: "O código de barras deve ser uma string." })
+  @IsOptional({ message: "O código de barras é opcional." })
+  bar_code: string;
 }

@@ -13,6 +13,7 @@ export class ProductService {
     name,
     price,
     image,
+    bar_code,
   }: ProductCreateDTO) {
     try {
       const productCollection = await orm.collection<ProductModel>(
@@ -28,6 +29,7 @@ export class ProductService {
         createdAt: new Date(),
         updatedAt: new Date(),
         entity_Name: "product",
+        bar_code
       });
       return product.toObject();
     } catch (error) {

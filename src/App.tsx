@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
-import "./globals.scss";
-import { api } from "./servers/api";
-import { Button, Grid, ThemeProvider } from "@mui/material";
-import { theme } from "./theme/theme";
+import { ThemeProvider } from "@mui/material";
 import { AppRouters } from "./Routes";
+import "./globals.scss";
+import { theme } from "./theme/theme";
 
 function App() {
   return (
