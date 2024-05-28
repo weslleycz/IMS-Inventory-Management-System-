@@ -10,13 +10,25 @@ import { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import CloseIcon from "@mui/icons-material/Close";
+import { api } from "../../servers/api";
 
-export const Form = () => {
+type Props = {
+  setProducts: any;
+};
+
+export const Form = ({ setProducts }: Props) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [fileName, setFileName] = useState("");
   const [image, setImage] = useState("");
+
+  const [name, setName] = useState("");
+  const [barCode, setBarCode] = useState("");
+  const [price, setPrice] = useState<number | "">("");
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
+  const [stock, setStock] = useState(0);
 
   const handleImageUpload = async (e: any) => {
     const file = e.target.files[0];
@@ -44,9 +56,32 @@ export const Form = () => {
     setImage("");
   };
 
+  const handleSubmit = async () => {
+    try {
+      const req = await api.post("/product", {
+        name,
+        description,
+        price: Number(price) * 100,
+        category,
+        stock: Number(stock),
+        image,
+      });
+      setName("");
+      setBarCode("");
+      setPrice(0);
+      setCategory("");
+      setDescription("");
+      setStock(0);
+      setProducts(req.data);
+      handleClose();
+    } catch (error) {
+      console.log(error);
+      alert("Aconteceu um erro inesperado.");
+    }
+  };
+
   return (
     <>
-      {fileName}
       <Button onClick={handleOpen} endIcon={<AddIcon />} variant="contained">
         Adicionar Novo
       </Button>
@@ -58,15 +93,15 @@ export const Form = () => {
       >
         <Box
           sx={{
-            position: "absolute" as "absolute",
+            position: "absolute",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: 400,
-            bgcolor: "background.paper",
+            width: "90%",
+            maxWidth: 600,
+            bgcolor: "white",
             boxShadow: 24,
-            borderRadius: 2,
-            p: 3.5,
+            p: 2,
           }}
         >
           <Typography sx={{ fontWeight: 900 }} variant="h6" gutterBottom>
@@ -76,13 +111,18 @@ export const Form = () => {
             fullWidth
             sx={{ marginBottom: 1.4 }}
             label="Nome"
+            required
             variant="outlined"
+            onChange={(e) => setName(e.target.value)}
+            value={name}
           />
           <TextField
             fullWidth
             sx={{ marginBottom: 1.4 }}
             label="Código de barras"
             variant="outlined"
+            onChange={(e) => setBarCode(e.target.value)}
+            value={barCode}
           />
           <TextField
             fullWidth
@@ -90,12 +130,28 @@ export const Form = () => {
             label="Preço"
             type="number"
             variant="outlined"
+            required
+            onChange={(e) => setPrice(e.target.value as unknown as number)}
+            value={price}
+          />
+          <TextField
+            fullWidth
+            sx={{ marginBottom: 1.4 }}
+            label="Estoque"
+            type="number"
+            variant="outlined"
+            required
+            onChange={(e) => setStock(e.target.value as unknown as number)}
+            value={stock}
           />
           <TextField
             fullWidth
             sx={{ marginBottom: 1.4 }}
             label="Categoria"
             variant="outlined"
+            required
+            onChange={(e) => setCategory(e.target.value)}
+            value={category}
           />
           <Box justifyContent={"space-between"} display={"flex"}>
             <Box>
@@ -146,9 +202,16 @@ export const Form = () => {
             label="Descrição"
             variant="outlined"
             multiline
-            rows={4}
+            onChange={(e) => setDescription(e.target.value)}
+            value={description}
+            rows={3}
           />
-          <Button sx={{ marginBottom: 1 }} fullWidth variant="contained">
+          <Button
+            onClick={handleSubmit}
+            sx={{ marginBottom: 0.5 }}
+            fullWidth
+            variant="contained"
+          >
             Salvar
           </Button>
           <Button onClick={handleClose} fullWidth variant="text">

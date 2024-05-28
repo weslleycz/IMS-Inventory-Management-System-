@@ -7,6 +7,7 @@ export class ProductModel {
   updatedAt!: Date;
   image?: string;
   readonly entity_Name: string = "product";
-  bar_code!: string ;
+  bar_code!: string;
   stock: number;
+  __id: number;
 }

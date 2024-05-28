@@ -24,4 +24,8 @@ export class ProductCreateDTO  {
   @IsString({ message: "O código de barras deve ser uma string." })
   @IsOptional({ message: "O código de barras é opcional." })
   bar_code: string;
+
+  @IsNumber({}, { message: "O estoque deve ser um número." })
+  @IsNotEmpty({ message: "O estoque é obrigatório." })
+  stock: number;
 }
