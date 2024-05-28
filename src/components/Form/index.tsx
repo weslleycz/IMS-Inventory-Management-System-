@@ -74,6 +74,8 @@ export const Form = ({ setProducts }: Props) => {
       setStock(0);
       setProducts(req.data);
       handleClose();
+      setImage("");
+      setFileName("");
     } catch (error) {
       console.log(error);
       alert("Aconteceu um erro inesperado.");

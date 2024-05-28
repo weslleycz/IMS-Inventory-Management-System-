@@ -45,7 +45,7 @@ export const Home = () => {
           </Typography>
           <Form setProducts={setProducts} />
         </Box>
-        <div style={{ height: 550, width: "100%" }}>
+        <div style={{ height: 500, width: "100%" }}>
           <DataGrid
             rows={products
               .sort((a, b) => {

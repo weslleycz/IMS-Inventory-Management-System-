@@ -2,6 +2,7 @@ import { Service } from "typedi";
 import { ProductCreateDTO } from "./product.dto";
 import { ProductModel } from "../../models/product.model";
 import { orm } from "../../servers/snapjson";
+import { Param, Res } from "decorators-express";
 
 @Service()
 export class ProductService {
@@ -50,6 +51,29 @@ export class ProductService {
         "product",
         true
       );
+
+      const productsCollection = await productCollection.find({
+        entity_Name: "product",
+      });
+
+      const products = productsCollection.map((product) => {
+        return product.toObject();
+      });
+      return products;
+    } catch (error) {
+      throw new Error("Não foi possível realizar a operação");
+    }
+  }
+
+  async delete(id: number) {
+    try {
+      const productCollection = await orm.collection<ProductModel>(
+        "product",
+        true
+      );
+      await productCollection.deleteOne({
+        __id: Number(id),
+      });
 
       const productsCollection = await productCollection.find({
         entity_Name: "product",

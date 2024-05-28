@@ -24,5 +24,4 @@ release
 *.njsproj
 *.sln
 *.sw?
-db
-db.json
+db/db.json

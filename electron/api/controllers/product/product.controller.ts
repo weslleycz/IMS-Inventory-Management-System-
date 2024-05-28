@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Post, Res, Use } from "decorators-express";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Res,
+  Use,
+} from "decorators-express";
 import express from "express";
 import Container, { Service } from "typedi";
 import { ProductService } from "./product.service";
@@ -27,6 +36,19 @@ export class ProductController {
     try {
       const productService = Container.get(ProductService);
       const result = await productService.getAll();
+      res.status(200).json(result);
+    } catch (error: any) {
+      res.status(400).json({
+        message: error.message,
+      });
+    }
+  }
+
+  @Delete(":id")
+  async delete(@Res() res: express.Response, @Param("id") id: number) {
+    try {
+      const productService = Container.get(ProductService);
+      const result = await productService.delete(id);
       res.status(200).json(result);
     } catch (error: any) {
       res.status(400).json({
