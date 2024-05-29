@@ -6,6 +6,7 @@ import { Container } from "../../components/Container";
 import { Form } from "../../components/Form";
 import { ProductModel } from "../../models/product.model";
 import { api } from "../../servers/api";
+import { MenuProduct } from "../../components/MenuProduct";
 
 export const Home = () => {
   const [products, setProducts] = useState<ProductModel[]>([]);
@@ -34,6 +35,14 @@ export const Home = () => {
     { field: "name", headerName: "Produto", width: 200 },
     { field: "price", headerName: "Preço", width: 200 },
     { field: "stock", headerName: "Estoque", width: 200 },
+    {
+      field: "actions",
+      headerName: "Ações",
+      width: 200,
+      renderCell: (params) => (
+        <MenuProduct setProducts={setProducts} id={params.value} />
+      ),
+    },
   ];
 
   return (
@@ -64,6 +73,7 @@ export const Home = () => {
                   price: `R$ ${(product.price / 100).toFixed(2)}`,
                   stock: product.stock,
                   image: product.image,
+                  actions: product.__id,
                 };
               })}
             columns={columns}
