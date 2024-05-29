@@ -25,10 +25,17 @@ export const Form = ({ setProducts }: Props) => {
 
   const [name, setName] = useState("");
   const [barCode, setBarCode] = useState("");
-  const [price, setPrice] = useState<number | "">("");
+  const [price, setPrice] = useState<number>(0);
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [stock, setStock] = useState(0);
+
+  const [errors, setErrors] = useState({
+    name: false,
+    price: false,
+    category: false,
+    stock: false,
+  });
 
   const handleImageUpload = async (e: any) => {
     const file = e.target.files[0];
@@ -57,6 +64,22 @@ export const Form = ({ setProducts }: Props) => {
   };
 
   const handleSubmit = async () => {
+    if (name === "") {
+      setErrors({ ...errors, name: true });
+      return;
+    }
+    if (price <= 0) {
+      setErrors({ ...errors, price: true });
+      return;
+    }
+    if (stock < 0) {
+      setErrors({ ...errors, stock: true });
+      return;
+    }
+    if (category === "") {
+      setErrors({ ...errors, category: true });
+      return;
+    }
     try {
       const req = await api.post("/product", {
         name,
@@ -117,6 +140,9 @@ export const Form = ({ setProducts }: Props) => {
             variant="outlined"
             onChange={(e) => setName(e.target.value)}
             value={name}
+            onFocus={() => setErrors({ ...errors, name: false })}
+            error={errors.name}
+            helperText={errors.name ? "Nome é obrigatório." : ""}
           />
           <TextField
             fullWidth
@@ -135,6 +161,9 @@ export const Form = ({ setProducts }: Props) => {
             required
             onChange={(e) => setPrice(e.target.value as unknown as number)}
             value={price}
+            error={errors.price}
+            onFocus={() => setErrors({ ...errors, price: false })}
+            helperText={errors.price ? "Preço deve ser maior que zero." : ""}
           />
           <TextField
             fullWidth
@@ -145,6 +174,9 @@ export const Form = ({ setProducts }: Props) => {
             required
             onChange={(e) => setStock(e.target.value as unknown as number)}
             value={stock}
+            error={errors.stock}
+            onFocus={() => setErrors({ ...errors, stock: false })}
+            helperText={errors.stock ? "Estoque não pode ser negativo." : ""}
           />
           <TextField
             fullWidth
@@ -154,6 +186,9 @@ export const Form = ({ setProducts }: Props) => {
             required
             onChange={(e) => setCategory(e.target.value)}
             value={category}
+            error={errors.category}
+            onFocus={() => setErrors({ ...errors, category: false })}
+            helperText={errors.category ? "Categoria é obrigatória." : ""}
           />
           <Box justifyContent={"space-between"} display={"flex"}>
             <Box>
