@@ -29,3 +29,33 @@ export class ProductCreateDTO  {
   @IsNotEmpty({ message: "O estoque é obrigatório." })
   stock: number;
 }
+
+export class ProductUpdateDTO {
+  @IsOptional()
+  @IsString({ message: "O nome deve ser uma string." })
+  name: string;
+  
+  @IsOptional()
+  @IsString({ message: "A descrição deve ser uma string." })
+  description?: string;
+
+  @IsOptional()
+  @IsNumber({}, { message: "O preço deve ser um número." })
+  price?: number;
+
+  @IsOptional()
+  @IsString({ message: "A categoria deve ser uma string." })
+  category?: string;
+
+  @IsOptional()
+  @IsString({ message: "A imagem deve ser uma string." })
+  image?: string;
+
+  @IsOptional()
+  @IsString({ message: "O código de barras deve ser uma string." })
+  bar_code?: string;
+
+  @IsOptional()
+  @IsNumber({}, { message: "O estoque deve ser um número." })
+  stock?: number;
+}

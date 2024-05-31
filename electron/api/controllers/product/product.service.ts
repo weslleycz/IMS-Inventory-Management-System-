@@ -1,7 +1,7 @@
 import { Service } from "typedi";
 import { ProductModel } from "../../models/product.model";
 import { orm } from "../../servers/snapjson";
-import { ProductCreateDTO } from "./product.dto";
+import { ProductCreateDTO, ProductUpdateDTO } from "./product.dto";
 
 @Service()
 export class ProductService {
@@ -87,7 +87,40 @@ export class ProductService {
     }
   }
 
-  async update(id: number, ){
-    console.log(id);
+  async update(id: number, body: ProductUpdateDTO) {
+    try {
+      const productCollection = await orm.collection<ProductModel>(
+        "product",
+        true
+      );
+      const filteredObj = Object.fromEntries(Object.entries(body).filter(([key, value]) => value !== undefined))
+      await productCollection.updateOne({
+        ...filteredObj,
+        updatedAt: new Date(),
+
+      }, { __id: Number(id) });
+      const productsCollection = await productCollection.find({
+        entity_Name: "product",
+      });
+      const products = productsCollection.map((product) => {
+        return product.toObject();
+      });
+      return products;
+    } catch (error) {
+      throw new Error("Não foi possível realizar a operação");
+    }
+  }
+
+  async select(id: number) {
+    try {
+      const productCollection = await orm.collection<ProductModel>(
+        "product",
+        true
+      );
+      const product = await productCollection.findById(Number(id));
+      return product?.toObject();
+    } catch (error) {
+      throw new Error("Não foi possível realizar a operação");
+    }
   }
 }
