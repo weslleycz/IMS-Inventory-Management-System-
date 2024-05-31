@@ -1,10 +1,9 @@
+import * as bodyParser from "body-parser";
 import { AppRouter } from "decorators-express";
 import express from "express";
 import "reflect-metadata";
 import Container, { Service } from "typedi";
-import * as bodyParser from "body-parser";
 import "./controllers";
-
 import cors from "cors";
 import helmet from "helmet";
 
@@ -17,18 +16,6 @@ class AppExpress {
 
     app.use(bodyParser.json({ limit: "500mb" }));
     app.use(bodyParser.urlencoded({ limit: "500mb", extended: true }));
-
-    // app.use((req, res, next) => {
-    //   req;
-    //   res.header("Access-Control-Allow-Origin", "*");
-    //   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-    //   app.use(
-    //     cors({
-    //       origin: ["*"],
-    //     })
-    //   );
-    //   next();
-    // });
 
     app.use(cors());
     app.use(AppRouter.getInstance());

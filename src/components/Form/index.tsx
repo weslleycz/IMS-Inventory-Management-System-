@@ -14,9 +14,10 @@ import { api } from "../../servers/api";
 
 type Props = {
   setProducts: any;
+  setproductsAll: any;
 };
 
-export const Form = ({ setProducts }: Props) => {
+export const Form = ({ setProducts, setproductsAll }: Props) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -89,7 +90,7 @@ export const Form = ({ setProducts }: Props) => {
         category,
         stock: Number(stock),
         image,
-        bar_code: barCode
+        bar_code: barCode,
       });
       setName("");
       setBarCode("");
@@ -98,6 +99,7 @@ export const Form = ({ setProducts }: Props) => {
       setDescription("");
       setStock(0);
       setProducts(req.data);
+      setproductsAll(req.data);
       handleClose();
       setImage("");
       setFileName("");
@@ -128,7 +130,7 @@ export const Form = ({ setProducts }: Props) => {
             maxWidth: 600,
             bgcolor: "white",
             boxShadow: 24,
-            p: 2,
+            p: 3,
           }}
         >
           <Typography sx={{ fontWeight: 900 }} variant="h6" gutterBottom>

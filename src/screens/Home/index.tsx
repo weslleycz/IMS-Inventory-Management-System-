@@ -7,13 +7,16 @@ import { Form } from "../../components/Form";
 import { MenuProduct } from "../../components/MenuProduct";
 import { ProductModel } from "../../models/product.model";
 import { api } from "../../servers/api";
+import { Filter } from "../../components/Filter";
 
 export const Home = () => {
   const [products, setProducts] = useState<ProductModel[]>([]);
+  const [productsAll, setproductsAll] = useState<ProductModel[]>([]);
   useEffect(() => {
     (async () => {
       const res = (await api.get("/product")).data;
       setProducts(res);
+      setproductsAll(res);
     })();
   }, []);
 
@@ -41,7 +44,11 @@ export const Home = () => {
       headerName: "Ações",
       width: 200,
       renderCell: (params) => (
-        <MenuProduct setProducts={setProducts} id={params.value} />
+        <MenuProduct
+          setproductsAll={setproductsAll}
+          setProducts={setProducts}
+          id={params.value}
+        />
       ),
     },
   ];
@@ -49,15 +56,20 @@ export const Home = () => {
   return (
     <>
       <Container>
-        <Box justifyContent={"space-between"} sx={{ p: 2 }} display={"flex"}>
-          <Typography variant="h6" gutterBottom>
+        <Box sx={{ p: 2 }}>
+          <Typography sx={{ fontWeight: 900 }} variant="h6" gutterBottom>
             Estoque
           </Typography>
-          <Form setProducts={setProducts} />
+          <Box justifyContent={"space-between"} display={"flex"}>
+            <Filter
+              setProducts={setProducts}
+              productsAll={productsAll}
+            />
+            <Form setproductsAll={setproductsAll} setProducts={setProducts} />
+          </Box>
         </Box>
-
         <Box p={2}>
-        <div style={{ height: 500, width: "100%" }}>
+          <div style={{ height: 500, width: "100%" }}>
             <DataGrid
               rows={products
                 .sort((a, b) => {
@@ -77,7 +89,7 @@ export const Home = () => {
                     stock: product.stock,
                     image: product.image,
                     actions: product.__id,
-                    barCode: product.bar_code
+                    barCode: product.bar_code,
                   };
                 })}
               columns={columns}
@@ -90,7 +102,6 @@ export const Home = () => {
             />
           </div>
         </Box>
-
       </Container>
     </>
   );

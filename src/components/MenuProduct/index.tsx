@@ -8,9 +8,10 @@ type Props = {
   id: string;
   setProducts: any;
   // product:ProductModel
+  setproductsAll: any;
 };
 
-export const MenuProduct = ({ id, setProducts }: Props) => {
+export const MenuProduct = ({ id, setProducts, setproductsAll }: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -34,6 +35,7 @@ export const MenuProduct = ({ id, setProducts }: Props) => {
         <MoreVertIcon />
       </IconButton>
       <DeleteProductModal
+        setproductsAll={setproductsAll}
         id={id}
         open={openModal}
         handleDelete={handleOpenModal}
@@ -50,7 +52,11 @@ export const MenuProduct = ({ id, setProducts }: Props) => {
         }}
       >
         <MenuItem onClick={handleOpenModal}>Excluir</MenuItem>
-        <FormEdit  setProducts={setProducts} id={id} />
+        <FormEdit
+          setproductsAll={setproductsAll}
+          setProducts={setProducts}
+          id={id}
+        />
       </Menu>
     </>
   );

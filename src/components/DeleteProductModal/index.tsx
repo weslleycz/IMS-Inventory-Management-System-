@@ -6,20 +6,22 @@ type Props = {
   handleClose: () => void;
   handleDelete: () => void;
   setProducts: any;
+  setproductsAll: any;
   id: string;
 };
 
 export const DeleteProductModal = ({
   open,
   handleClose,
-  // handleDelete,
   id,
   setProducts,
+  setproductsAll
 }: Props) => {
   const handleDeleteProduct = async () => {
     try {
       const res = await api.delete(`/product/${id}`);
       setProducts(res.data);
+      setproductsAll(res.data);
       handleClose();
     } catch (error) {
       alert("Aconteceu um erro inesperado.");

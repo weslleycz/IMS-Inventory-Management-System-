@@ -15,9 +15,10 @@ import { api } from "../../servers/api";
 type Props = {
   setProducts: any;
   id: string;
+  setproductsAll: any;
 };
 
-export const FormEdit = ({ setProducts, id }: Props) => {
+export const FormEdit = ({ setProducts, id, setproductsAll }: Props) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -99,6 +100,7 @@ export const FormEdit = ({ setProducts, id }: Props) => {
       setDescription("");
       setStock(0);
       setProducts(req.data);
+      setproductsAll(req.data)
       handleClose();
       setImage("");
       setFileName("");
@@ -145,7 +147,7 @@ export const FormEdit = ({ setProducts, id }: Props) => {
             maxWidth: 600,
             bgcolor: "white",
             boxShadow: 24,
-            p: 2,
+            p: 3,
           }}
         >
           <Typography sx={{ fontWeight: 900 }} variant="h6" gutterBottom>

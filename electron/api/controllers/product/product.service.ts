@@ -93,12 +93,19 @@ export class ProductService {
         "product",
         true
       );
-      const filteredObj = Object.fromEntries(Object.entries(body).filter(([key, value]) => value !== undefined))
-      await productCollection.updateOne({
-        ...filteredObj,
-        updatedAt: new Date(),
-
-      }, { __id: Number(id) });
+      const filteredObj = Object.fromEntries(
+        Object.entries(body).filter(([key, value]) => {
+          key
+          return value !== undefined;
+        })
+      );
+      await productCollection.updateOne(
+        {
+          ...filteredObj,
+          updatedAt: new Date(),
+        },
+        { __id: Number(id) }
+      );
       const productsCollection = await productCollection.find({
         entity_Name: "product",
       });
