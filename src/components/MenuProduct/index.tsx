@@ -1,11 +1,13 @@
-import { IconButton, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 import { DeleteProductModal } from "../DeleteProductModal";
+import { FormEdit } from "../FormEdit";
 
 type Props = {
   id: string;
   setProducts: any;
+  // product:ProductModel
 };
 
 export const MenuProduct = ({ id, setProducts }: Props) => {
@@ -48,6 +50,7 @@ export const MenuProduct = ({ id, setProducts }: Props) => {
         }}
       >
         <MenuItem onClick={handleOpenModal}>Excluir</MenuItem>
+        <FormEdit  setProducts={setProducts} id={id} />
       </Menu>
     </>
   );
