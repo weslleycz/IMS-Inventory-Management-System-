@@ -81,6 +81,7 @@ export const Form = ({ setProducts }: Props) => {
       return;
     }
     try {
+      console.log(barCode);
       const req = await api.post("/product", {
         name,
         description,
@@ -88,6 +89,7 @@ export const Form = ({ setProducts }: Props) => {
         category,
         stock: Number(stock),
         image,
+        bar_code: barCode
       });
       setName("");
       setBarCode("");

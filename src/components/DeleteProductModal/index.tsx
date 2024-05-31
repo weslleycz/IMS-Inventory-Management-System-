@@ -12,7 +12,7 @@ type Props = {
 export const DeleteProductModal = ({
   open,
   handleClose,
-  handleDelete,
+  // handleDelete,
   id,
   setProducts,
 }: Props) => {

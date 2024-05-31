@@ -1,8 +1,7 @@
 import { Service } from "typedi";
-import { ProductCreateDTO } from "./product.dto";
 import { ProductModel } from "../../models/product.model";
 import { orm } from "../../servers/snapjson";
-import { Param, Res } from "decorators-express";
+import { ProductCreateDTO } from "./product.dto";
 
 @Service()
 export class ProductService {
@@ -86,5 +85,9 @@ export class ProductService {
     } catch (error) {
       throw new Error("Não foi possível realizar a operação");
     }
+  }
+
+  async update(id: number, ){
+    console.log(id);
   }
 }
