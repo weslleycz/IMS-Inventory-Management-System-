@@ -1,13 +1,13 @@
 import { app, BrowserWindow } from 'electron'
 // import { createRequire } from 'node:module'
-import { fileURLToPath } from 'node:url'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import "./api"
 
 // const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-export { app };
+export { app }
 
 // The built directory structure
 //
@@ -31,6 +31,10 @@ let win: BrowserWindow | null
 
 function createWindow() {
   win = new BrowserWindow({
+    // show: false,
+    width: 1024,
+    height: 700,
+    transparent: true,
     icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.mjs'),

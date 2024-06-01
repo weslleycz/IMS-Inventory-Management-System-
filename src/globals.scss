@@ -115,7 +115,7 @@
     display: block;
   }
   body {
-    line-height: 1;
+    overflow: hidden;
   }
   ol,
   ul {
@@ -145,7 +145,7 @@
   }
   
   body {
-    background-color: #ffffff;
+    background-color: #ffffff00;
     color: #000000;
     -webkit-font-smoothing: antialiased;
     font-family: "Inter";
